@@ -24,4 +24,28 @@
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="158dp" />
 
+    <TextView
+        android:id="@+id/ourWord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="24dp"
+        tools:layout_editor_absoluteY="35dp" />
+
+    <TextView
+        android:id="@+id/emailaddresslabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="24dp"
+        tools:layout_editor_absoluteY="69dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="299dp"
+        tools:layout_editor_absoluteY="104dp" />
+
 </android.support.constraint.ConstraintLayout>
