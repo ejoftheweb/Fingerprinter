@@ -17,7 +17,9 @@ import java.net.URL;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import uk.co.platosys.fingerprinter.exceptions.NullLockException;
+import uk.co.platosys.minigma.Fingerprint;
 import uk.co.platosys.minigma.HKPLockStore;
 import uk.co.platosys.minigma.Lock;
 import uk.co.platosys.minigma.LockStore;
@@ -26,56 +28,122 @@ import uk.co.platosys.minigma.exceptions.Exceptions;
 import uk.co.platosys.minigma.exceptions.MinigmaException;
 
 public class MainActivity extends AppCompatActivity {
-@BindView(R.id.emailaddress)
-    EditText emailAddress;
-@BindView(R.id.biomeslist)
-    ListView biomesList;
-@BindView(R.id.ourWord)
-    TextView ourWordView;
-@BindView(R.id.emailaddresslabel)
-TextView emailAddressLabel;
-@BindView(R.id.button)
-    Button button;
-LockStore remoteLockStore;
-LockStore deviceLockStore;
-Lock theirLock;
-Lock ourLock;
-String username;
+
+
+        @BindView(R.id.emailaddress)
+        EditText emailAddress;
+        @BindView(R.id.ourWord)
+        TextView ourWordView;
+        @BindView(R.id.theirWord0)
+        TextView theirWord0;
+        @BindView(R.id.theirWord1)
+        TextView theirWord1;
+        @BindView(R.id.theirWord2)
+        TextView theirWord2;
+        @BindView(R.id.theirWord3)
+        TextView theirWord3;
+        @BindView(R.id.button)
+        Button button;
+        LockStore remoteLockStore;
+        LockStore deviceLockStore;
+        Lock theirLock;
+        Lock ourLock;
+        List<String> ourfingerprint;
+        List<String> theirfingerprint;
+        int position=-1;
+        int index=0;
+        String targetWord="";
+        String username;
+        boolean pass=false;
+        int size=0;
+        TextView[] theirWords ={theirWord0,theirWord1,theirWord2,theirWord3};
+
+        private View.OnClickListener clickListener = new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                TextView textView = (TextView) view;
+                if (textView.getText().equals(targetWord)){
+                    pass=true;
+                    if (index < theirfingerprint.size()) {
+                        index++;
+                        increment();
+                    } else {
+                        success();
+                    }
+
+
+                }else{
+                    pass=false;
+                }
+            }
+        };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedPreferences = this.getSharedPreferences("URL", MODE_PRIVATE);
         this.username=sharedPreferences.getString(FPConstants.PREFS_USERNAME_KEY, FPConstants.PREFS_USERNAME_KEY);
-        try{
-            URL url = new URL(FPConstants.HKP_PROTOCOL, FPConstants.HKP_HOST, FPConstants.HKP_PORT, FPConstants.HKP_FILE);
-            this.remoteLockStore = new HKPLockStore(url);
-            this.deviceLockStore=new MinigmaLockStore(FPConstants.PGP_KEYRING_FILE, false);
+        try {
+            this.remoteLockStore = new HKPLockStore(FPConstants.HKP_HOST, FPConstants.HKP_PORT);
+            this.deviceLockStore = new MinigmaLockStore(FPConstants.PGP_KEYRING_FILE, false);
             ourLock = deviceLockStore.getLock(username);
-        }catch (MalformedURLException murlx){
 
         }catch (MinigmaException mex){
 
         }
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+        for (TextView textView:theirWords){
+            textView.setOnClickListener(clickListener);
+        }
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
+                try{
                     theirLock = remoteLockStore.getLock(emailAddress.getText().toString());
+                    theirfingerprint = theirLock.getFingerprint().getFingerprint();
                     start();
-                } catch (Exception mex){
+                }catch (Exception mex){
                     Exceptions.dump(mex);
                 }
             }
         });
     }
 
-    private void start() throws Exception{
-        if (ourLock==null){ throw new NullLockException("start called with null lock");}
-        if (theirLock==null){throw new NullLockException("their lock is null");}
-            List<String> ourfingerprint = ourLock.getFingerprint().getFingerprint();
-            List<String> theirfingerprint = theirLock.getFingerprint().getFingerprint();
-            ourWordView.setText(ourfingerprint.get(0));
+    private void start() throws Exception {
+        if (ourLock == null) {
+            throw new NullLockException("start called with null lock");
+        }
+        if (theirLock == null) {
+            throw new NullLockException("their lock is null");
+        }
+        ourfingerprint = ourLock.getFingerprint().getFingerprint();
+        increment();
     }
+
+    private void fillTable(int index){
+        position = (int) Math.rint(Math.random()*4);
+        targetWord = theirfingerprint.get(index);
+        theirWords[position].setText(targetWord);
+        for (int i=0; i<theirWords.length; i++){
+            if (i!=position){
+                String fillword="";
+                while(!fillword.equals(targetWord)) {
+                    fillword = Fingerprint.EVEN_BIOMES[(int) Math.rint(Math.random() * Fingerprint.EVEN_BIOMES.length)];
+                }
+                theirWords[i].setText(fillword);
+            }
+        }
+    }
+
+    private void increment() {
+        ourWordView.setText(ourfingerprint.get(index));
+        fillTable(index);
+
+    }
+    public void success (){
+
+    }
+
 
 }

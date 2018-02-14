@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Fingerprinter</string>
+    <string name="app_name">Compare OpenPGP Fingerprints</string>
+    <string name="email_label">Enter the other player\'s email address:</string>
+    <string name="no_word_found">Not one of these words!</string>
 </resources>

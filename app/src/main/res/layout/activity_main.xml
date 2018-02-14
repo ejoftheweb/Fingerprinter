@@ -8,21 +8,9 @@
 
 
 
-    <EditText
-        android:id="@+id/emailaddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        tools:layout_editor_absoluteX="84dp"
-        tools:layout_editor_absoluteY="104dp" />
 
-    <ListView
-        android:id="@+id/biomeslist"
-        android:layout_width="368dp"
-        android:layout_height="345dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="158dp" />
+
+
 
     <TextView
         android:id="@+id/ourWord"
@@ -36,9 +24,17 @@
         android:id="@+id/emailaddresslabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="@string/email_label"
         tools:layout_editor_absoluteX="24dp"
         tools:layout_editor_absoluteY="69dp" />
+    <EditText
+        android:id="@+id/emailaddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="13"
+        android:inputType="textEmailAddress"
+        tools:layout_editor_absoluteX="24dp"
+        tools:layout_editor_absoluteY="104dp" />
 
     <Button
         android:id="@+id/button"
@@ -47,5 +43,41 @@
         android:text="Button"
         tools:layout_editor_absoluteX="299dp"
         tools:layout_editor_absoluteY="104dp" />
+    <TextView
+        android:id="@+id/theirWord0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="24dp"
+        tools:layout_editor_absoluteY="160dp" />
+    <TextView
+        android:id="@+id/theirWord1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="24dp"
+        tools:layout_editor_absoluteY="200dp" />
+    <TextView
+        android:id="@+id/theirWord2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="24dp"
+        tools:layout_editor_absoluteY="240dp" />
+    <TextView
+        android:id="@+id/theirWord3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="24dp"
+        tools:layout_editor_absoluteY="280dp" />
+
+    <TextView
+        android:id="@+id/noWordFound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_word_found"
+        tools:layout_editor_absoluteX="24dp"
+        tools:layout_editor_absoluteY="320dp" />
 
 </android.support.constraint.ConstraintLayout>

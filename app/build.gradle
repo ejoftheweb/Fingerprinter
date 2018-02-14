@@ -23,7 +23,8 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.ejoftheweb:minigmand:master-SNAPSHOT'
+
+    compile 'com.github.ejoftheweb:minigmand:v0.1'
     compile group: 'org.jdom', name: 'jdom2', version: '2.0.6'
     compile 'com.jakewharton:butterknife:8.8.1'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
