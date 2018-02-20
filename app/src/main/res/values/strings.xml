@@ -1,5 +1,37 @@
 <resources>
-    <string name="app_name">Compare OpenPGP Fingerprints</string>
+    <string name="app_name">VOUCH</string>
     <string name="email_label">Enter the other player\'s email address:</string>
+    <string name="your_email">Enter your email address</string>
+    <string name="your_name">Enter your name</string>
     <string name="no_word_found">Not one of these words!</string>
+    <string name="OK">OK</string>
+    <string name="title_activity_create_lock_set">CreateLockSet</string>
+    <string name="choose_passphrase_label">Choose a memorable pass-phrase from the list</string>
+    <string name="choose_passphrase_hint">Tap your chosen passphrase. Move the slider for a new
+    selection of longer or shorter passphrases</string>
+    <string name="less_secure_label">Less secure, easier</string>
+    <string name="more_secure_lable">More secure, harder</string>
+    <string name="passphrase_error">There has been an error, OOPS!</string>
+    <string name="passphrase_learn0">Make sure you are in private for the this stage. Press "start" to continue
+    and "hide" if you are disturbed</string>
+    <string name="passphrase_learn1">Now you must commit your passphrase to memory. </string>
+    <string name="passphrase_learn2">Your passphrase is used to activate your private Key, which is kept securely on this
+        device</string>
+
+    <string name="passphrase_learn3">When you are happy that you can remember your passphrase, press "next"</string>
+    <string name="passphrase_test">Now see if you can remember your passphrase - enter it below.</string>
+    <string name="button_start">start</string>
+    <string name="button_hide">hide</string>
+    <string name="button_next">next</string>
+
+    <string name="locksmith_working_message">
+        Vouch will now create your public Lock and matching private Key. This process can take
+        some time, so in the meantime you can create your Vouch profile.
+    </string>
+    <string name="title_activity_tapp">TappActivity</string>
+    <string-array name="imageoptions">
+        <item>Camera</item>
+        <item>Selfie</item>
+        <item>Photo</item>
+    </string-array>
 </resources>

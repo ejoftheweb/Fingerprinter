@@ -3,4 +3,5 @@
     <color name="colorPrimary">#22ab33</color>
     <color name="colorPrimaryDark">#118922</color>
     <color name="colorAccent">#ab2323</color>
+    <color name="popupBackground">#abab00</color>
 </resources>

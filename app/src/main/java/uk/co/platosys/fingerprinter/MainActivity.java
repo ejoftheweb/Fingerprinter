@@ -1,5 +1,6 @@
 package uk.co.platosys.fingerprinter;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.Preference;
 import android.support.v7.app.AppCompatActivity;
@@ -56,9 +57,9 @@ public class MainActivity extends AppCompatActivity {
         String username;
         boolean pass=false;
         int size=0;
-        TextView[] theirWords ={theirWord0,theirWord1,theirWord2,theirWord3};
+    TextView[] theirWords ={theirWord0,theirWord1,theirWord2,theirWord3};
 
-        private View.OnClickListener clickListener = new View.OnClickListener(){
+    private View.OnClickListener clickListener = new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 TextView textView = (TextView) view;
@@ -82,32 +83,44 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedPreferences = this.getSharedPreferences("URL", MODE_PRIVATE);
-        this.username=sharedPreferences.getString(FPConstants.PREFS_USERNAME_KEY, FPConstants.PREFS_USERNAME_KEY);
         try {
-            this.remoteLockStore = new HKPLockStore(FPConstants.HKP_HOST, FPConstants.HKP_PORT);
-            this.deviceLockStore = new MinigmaLockStore(FPConstants.PGP_KEYRING_FILE, false);
-            ourLock = deviceLockStore.getLock(username);
-
-        }catch (MinigmaException mex){
-
+            this.username = sharedPreferences.getString(FPConstants.PREFS_USERNAME_KEY, FPConstants.PREFS_USERNAME_KEY);
+        }catch(Exception x){
+            Exceptions.dump(x);
         }
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-        for (TextView textView:theirWords){
-            textView.setOnClickListener(clickListener);
-        }
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try{
-                    theirLock = remoteLockStore.getLock(emailAddress.getText().toString());
-                    theirfingerprint = theirLock.getFingerprint().getFingerprint();
-                    start();
-                }catch (Exception mex){
-                    Exceptions.dump(mex);
-                }
+        if (username.equals(FPConstants.PREFS_USERNAME_KEY)){
+            Intent signUpIntent = new Intent(this, SignupActivity.class);
+            startActivity(signUpIntent);
+        }else {
+            try {
+                this.remoteLockStore = new HKPLockStore(FPConstants.HKP_HOST, FPConstants.HKP_PORT);
+                this.deviceLockStore = new MinigmaLockStore(FPConstants.PGP_KEYRING_FILE, false);
+                ourLock = deviceLockStore.getLock(username);
+
+            } catch (MinigmaException mex) {
+                Exceptions.dump(mex);
             }
-        });
+            setContentView(R.layout.activity_main);
+            ButterKnife.bind(this);
+            button = findViewById(R.id.button);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    try {
+                        theirLock = remoteLockStore.getLock(emailAddress.getText().toString());
+                        theirfingerprint = theirLock.getFingerprint().getFingerprint();
+                        start();
+                    } catch (Exception mex) {
+                        Exceptions.dump(mex);
+                    }
+                }
+            });
+            TextView[] theirWords = {theirWord0, theirWord1, theirWord2, theirWord3};
+
+            for (TextView textView : theirWords) {
+                textView.setOnClickListener(clickListener);
+            }
+        }
     }
 
     private void start() throws Exception {
