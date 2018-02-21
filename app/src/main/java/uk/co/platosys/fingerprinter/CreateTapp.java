@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -27,19 +28,14 @@ import uk.co.platosys.minigma.exceptions.Exceptions;
 public class CreateTapp extends TappActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
-    @BindView(R.id.imageSourceSpinner)
-    Spinner imageSourceSpinner;
-    @BindView(R.id.imageLayout)
-    LinearLayout imageLayout;
-    ImageView imageView;
+     ImageView imageView;
     CameraManager cameraManager;
     String frontCameraID;
     String rearCameraID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_tapp);
-        ButterKnife.bind(this);
+        Log.i("CT", "onCreate called");
         this.cameraManager = (CameraManager) getSystemService(CAMERA_SERVICE);
         try {
             String[] cameraIDs = cameraManager.getCameraIdList();

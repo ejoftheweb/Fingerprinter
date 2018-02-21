@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/tools">
     <string name="app_name">VOUCH</string>
     <string name="email_label">Enter the other player\'s email address:</string>
     <string name="your_email">Enter your email address</string>
@@ -23,15 +23,23 @@
     <string name="button_start">start</string>
     <string name="button_hide">hide</string>
     <string name="button_next">next</string>
-
+    <string name="twitter_email_not_confirmed">Your email  address has not been confirmed on Twitter. Please log in to Twitter, got to Account - Settings/Privacy and confirm
+    your email address</string>
     <string name="locksmith_working_message">
         Vouch will now create your public Lock and matching private Key. This process can take
         some time, so in the meantime you can create your Vouch profile.
     </string>
     <string name="title_activity_tapp">TappActivity</string>
+    <string name="signupinfo">You must be signed up to Twitter to use Vouch.</string>
+    <string name="get_twitter">Get Twitter now..</string>
+
     <string-array name="imageoptions">
         <item>Camera</item>
         <item>Selfie</item>
         <item>Photo</item>
     </string-array>
+    <!--TwitterKit-->
+
+        <!--paste in api key and consumer secret here -->
+
 </resources>

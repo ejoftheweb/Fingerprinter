@@ -1,71 +1,80 @@
 package uk.co.platosys.fingerprinter;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.Twitter;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterAuthClient;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import uk.co.platosys.minigma.exceptions.Exceptions;
 
-public class SignupActivity extends AppCompatActivity {
-@BindView(R.id.namelabel)
-    TextView nameLabelView;
-    @BindView(R.id.name)
-    EditText nameView;
-    @BindView(R.id.emailaddresslabel)
-    TextView emailLabelView;
-    @BindView(R.id.emailaddress)
-    EditText emailView;
-    @BindView(R.id.button)
-    Button button;
+public class SignupActivity extends BaseActivity {
+
+   @BindView(R.id.login_button)
+    TwitterLoginButton twitterLoginButton;
+    @BindView(R.id.getTwitterButton)
+    Button getTwitterButton;
     String name;
     String email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Twitter.initialize(this);
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
-        button.setOnClickListener(new View.OnClickListener() {
+
+        twitterLoginButton.setCallback(new Callback<TwitterSession>() {
             @Override
-            public void onClick(View view) {
-                try{
-                    name=nameView.getText().toString();
-                    email=emailView.getText().toString();
-                    Log.i("SUA", "name="+name+", email="+email);
-                    if (isExternalStorageWritable()) {
-                        /*File lockStoreFolder = new File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), FPConstants.PGP_PUBRING_FOLDER);
-                        while (!lockStoreFolder.exists()&&lockStoreFolder.canWrite()) {
-                            lockStoreFolder.mkdir();
+            public void success(Result<TwitterSession> result) {
+                TwitterSession twitterSession = result.data;
+                name=twitterSession.getUserName();
+                selectPassphrase(name);
+            }
 
-                        }
-                            File lockStoreFile = new File(lockStoreFolder, FPConstants.PGP_PUBRING_FILENAME);*/
-                       /* LockStore lockStore = new MinigmaLockStore(lockStoreFile, true);
-                        File keyFolder = getFilesDir();
-                        File userFolder = new File (keyFolder, name);
-                        if(!userFolder.exists()){userFolder.mkdir();}
-                        if (userFolder.isDirectory()){
-                            Log.i("SUA", userFolder.getAbsolutePath()+" is directory");
-                        }else{
-                            Log.i("SUA", userFolder.getAbsolutePath()+" is not a directory");
-                        }
-
-
-                        Lock lock  = LockSmith.createLockset(userFolder, lockStore,email,passphrase, Algorithms.RSA);*/
-                        selectPassphrase(name, email);
-
-                    }
-                }catch (Exception mex){
-                    Exceptions.dump(mex);
-                }
+            @Override
+            public void failure(TwitterException exception) {
+                Exceptions.dump(exception);
             }
         });
+
+        getTwitterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(FPConstants.PLAYSTORE_TWITTER_URL));
+                startActivity(intent);
+            }
+        });
+
+    }
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Pass the activity result to the login button.
+        twitterLoginButton.onActivityResult(requestCode, resultCode, data);
     }
     public boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
@@ -74,11 +83,12 @@ public class SignupActivity extends AppCompatActivity {
         }
         return false;
     }
-    private void selectPassphrase(String name, String email){
+    private void selectPassphrase(String name){
         Intent intent = new Intent(this, Choose_Passphrase.class);
         intent.putExtra("name",name);
-        intent.putExtra( "email", email);
+        //intent.putExtra( "email", email);
         startActivity(intent);
 
     }
+
 }

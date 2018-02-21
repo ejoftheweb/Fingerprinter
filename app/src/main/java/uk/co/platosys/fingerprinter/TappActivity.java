@@ -5,18 +5,50 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 
-public class TappActivity extends AppCompatActivity {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class TappActivity extends BaseActivity {
+    @BindView(R.id.imageSourceSpinner)
+    Spinner imageSourceSpinner;
+
+    @BindView(R.id.titleView)
+TextView titleView;
+@BindView(R.id.tweetView)
+TextView tweetView;
+@BindView(R.id.publisherNameView)
+TextView publisherNameView;
+@BindView(R.id.authorNameView)
+TextView authorNameView;
+@BindView(R.id.imageLayout)
+LinearLayout imageLayout;
+@BindView(R.id.contentView)
+TextView contentView;
+@BindView(R.id.addresseesButton)
+Button addresseesButton;
+@BindView(R.id.tagsButton)
+Button tagsButton;
+@BindView(R.id.endorsersButton)
+Button endorsersButton;
+@BindView(R.id.linksButton)
+Button linksButton;
+@BindView(R.id.fab)
+FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i("TA", "onCreate called");
         setContentView(R.layout.activity_tapp);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        ButterKnife.bind(this);
+        contentView.setText("");
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

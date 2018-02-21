@@ -85,7 +85,7 @@ private Intent nextIntent;
         Intent intent = getIntent();
         nextIntent= new Intent(this, Learn_Passphrase.class);
        nextIntent.putExtra(FPConstants.NAME_INTENT_KEY,intent.getStringExtra(FPConstants.NAME_INTENT_KEY));
-       nextIntent.putExtra(FPConstants.EMAIL_INTENT_KEY,intent.getStringExtra(FPConstants.EMAIL_INTENT_KEY));
+       //nextIntent.putExtra(FPConstants.EMAIL_INTENT_KEY,intent.getStringExtra(FPConstants.EMAIL_INTENT_KEY));
         updatePassPhrases(seekBar.getProgress());
     }
 

@@ -6,39 +6,25 @@
     android:layout_height="match_parent"
     tools:context="uk.co.platosys.fingerprinter.SignupActivity">
     <TextView
-        android:id="@+id/namelabel"
+        android:id="@+id/signuplabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/your_name"/>
+        android:text="@string/signupinfo"/>
 
-    <EditText
-        android:id="@+id/name"
+
+    <com.twitter.sdk.android.core.identity.TwitterLoginButton
+        android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="13"
-        android:inputType="textEmailAddress"
-        android:layout_below="@id/namelabel"
-       />
-    <TextView
-        android:id="@+id/emailaddresslabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/your_email"
-        android:layout_below="@id/name"
-        />
-    <EditText
-        android:id="@+id/emailaddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="13"
-        android:inputType="textEmailAddress"
-        android:layout_below="@id/emailaddresslabel"
-         />
+        android:layout_below="@id/signuplabel"/>
     <Button
-        android:id="@+id/button"
+        android:id="@+id/getTwitterButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/OK"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/get_twitter"
+        android:layout_below="@id/login_button"/>
 
-        android:layout_below="@id/emailaddress"/>
 </RelativeLayout>
+

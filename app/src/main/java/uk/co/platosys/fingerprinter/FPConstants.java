@@ -26,6 +26,7 @@ static final String PGP_PUBRING_FOLDER="PGPKeys";
     static final String EMAIL_INTENT_KEY="email";
     static final long FLASHWAIT = 800;
     static final long FLASHPAUSE=  1200;
-
-    static final float POPUP_PROPORTIONS=0.85f;
+static final String PLAYSTORE_TWITTER_URL = "https://play.google.com/store/apps/details?id=com.twitter.android";
+    static final float POPUP_PROPORTIONS=0.55f;
+    static final float AD_POPUP_PROPORTIONS=0.95f;
 }
