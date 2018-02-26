@@ -1,17 +1,14 @@
-package uk.co.platosys.fingerprinter;
+package uk.co.platosys.fingerprinter.activities;
 
 import android.content.Intent;
-import android.database.DataSetObserver;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
@@ -20,6 +17,8 @@ import java.util.Arrays;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import uk.co.platosys.effwords.EffwordLists;
+import uk.co.platosys.fingerprinter.FPConstants;
+import uk.co.platosys.fingerprinter.R;
 
 public class TestPassphrase extends AppCompatActivity {
     @BindView(R.id.nameView)
@@ -69,7 +68,7 @@ public class TestPassphrase extends AppCompatActivity {
             goOnIntent.putExtra(FPConstants.NAME_INTENT_KEY, name);
             startActivity(goOnIntent);
         }else{
-            Intent goBackIntent = new Intent(this, Learn_Passphrase.class);
+            Intent goBackIntent = new Intent(this, LearnPassphrase.class);
             goBackIntent.putExtra(FPConstants.PASSPHRASE_INTENT_KEY, passPhrase);
             goBackIntent.putExtra(FPConstants.EMAIL_INTENT_KEY, email);
             goBackIntent.putExtra(FPConstants.NAME_INTENT_KEY, name);

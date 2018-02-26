@@ -1,30 +1,23 @@
-package uk.co.platosys.fingerprinter;
+package uk.co.platosys.fingerprinter.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Environment;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.PopupWindow;
-import android.widget.TextView;
 
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.Twitter;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
-import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import uk.co.platosys.fingerprinter.FPConstants;
+import uk.co.platosys.fingerprinter.R;
 import uk.co.platosys.minigma.exceptions.Exceptions;
 
 public class SignupActivity extends BaseActivity {
@@ -34,20 +27,26 @@ public class SignupActivity extends BaseActivity {
     @BindView(R.id.getTwitterButton)
     Button getTwitterButton;
     String name;
-    String email;
+    TwitterSession twitterSession;
+    boolean sessionSet;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Twitter.initialize(this);
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
-
+       reportBinding();
         twitterLoginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
-                TwitterSession twitterSession = result.data;
+                twitterSession = result.data;
+                if(bound){
+                    vouchService.setTwitterSession(twitterSession);
+                    sessionSet=true;
+                }
                 name=twitterSession.getUserName();
-                selectPassphrase(name);
+                selectPassphrase(name, twitterSession);
             }
 
             @Override
@@ -76,19 +75,25 @@ public class SignupActivity extends BaseActivity {
         // Pass the activity result to the login button.
         twitterLoginButton.onActivityResult(requestCode, resultCode, data);
     }
-    public boolean isExternalStorageWritable() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            return true;
+
+    private void selectPassphrase(String name, TwitterSession twitterSession){
+        reportBinding();
+        if(!sessionSet){
+            if(bound){
+                vouchService.setTwitterSession(twitterSession);
+                sessionSet=true;
+            }else{
+                Log.d("SA", "not yet bound, session not yet set");
+            }
         }
-        return false;
-    }
-    private void selectPassphrase(String name){
-        Intent intent = new Intent(this, Choose_Passphrase.class);
-        intent.putExtra("name",name);
+        Intent selectPassphraseIntent = new Intent(this, ChoosePassphrase.class);
+
+        selectPassphraseIntent.putExtra("name",name);
         //intent.putExtra( "email", email);
-        startActivity(intent);
+        startActivity(selectPassphraseIntent);
 
     }
+
+
 
 }

@@ -1,4 +1,4 @@
-package uk.co.platosys.fingerprinter;
+package uk.co.platosys.fingerprinter.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,18 +6,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextSwitcher;
 import android.widget.TextView;
-import android.widget.ViewSwitcher;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import uk.co.platosys.fingerprinter.FPConstants;
+import uk.co.platosys.fingerprinter.R;
+import uk.co.platosys.fingerprinter.activities.TestPassphrase;
 import uk.co.platosys.minigma.PassPhraser;
 
-public class Learn_Passphrase extends AppCompatActivity {
+public class LearnPassphrase extends BaseActivity {
 @BindView(R.id.rubric)
     TextView rubricTextView;
 @BindView(R.id.flashchards)

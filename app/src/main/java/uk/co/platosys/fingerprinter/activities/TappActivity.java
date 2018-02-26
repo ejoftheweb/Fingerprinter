@@ -1,19 +1,20 @@
-package uk.co.platosys.fingerprinter;
+package uk.co.platosys.fingerprinter.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import uk.co.platosys.fingerprinter.R;
+import uk.co.platosys.fingerprinter.activities.BaseActivity;
 
 public class TappActivity extends BaseActivity {
     @BindView(R.id.imageSourceSpinner)
@@ -41,6 +42,8 @@ Button endorsersButton;
 Button linksButton;
 @BindView(R.id.fab)
 FloatingActionButton fab;
+
+ImageView illustrationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

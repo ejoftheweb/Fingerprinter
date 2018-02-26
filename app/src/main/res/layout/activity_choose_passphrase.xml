@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="uk.co.platosys.fingerprinter.Choose_Passphrase">
+    tools:context="uk.co.platosys.fingerprinter.activities.ChoosePassphrase">
 <TextView
     android:id ="@+id/choosePassphraseLabel"
     android:layout_width="match_parent"

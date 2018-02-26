@@ -1,22 +1,21 @@
-package uk.co.platosys.fingerprinter;
+package uk.co.platosys.fingerprinter.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import uk.co.platosys.fingerprinter.FPConstants;
 import uk.co.platosys.fingerprinter.R;
 import uk.co.platosys.minigma.PassPhraser;
 
-public class Choose_Passphrase extends AppCompatActivity {
+public class ChoosePassphrase extends BaseActivity {
 @BindView(R.id.learnPassphraseLabel)
     TextView learnPassphraseLabelView;
 @BindView(R.id.passPhrase1)
@@ -83,7 +82,7 @@ private Intent nextIntent;
 
 
         Intent intent = getIntent();
-        nextIntent= new Intent(this, Learn_Passphrase.class);
+        nextIntent= new Intent(this, LearnPassphrase.class);
        nextIntent.putExtra(FPConstants.NAME_INTENT_KEY,intent.getStringExtra(FPConstants.NAME_INTENT_KEY));
        //nextIntent.putExtra(FPConstants.EMAIL_INTENT_KEY,intent.getStringExtra(FPConstants.EMAIL_INTENT_KEY));
         updatePassPhrases(seekBar.getProgress());

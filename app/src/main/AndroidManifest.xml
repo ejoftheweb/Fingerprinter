@@ -24,19 +24,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignupActivity" />
-        <activity android:name=".Choose_Passphrase" />
+        <activity android:name=".activities.SignupActivity" />
+        <activity android:name=".activities.ChoosePassphrase" />
 
         <service
-            android:name=".LocksmithService"
+            android:name=".services.LocksmithService"
+            android:exported="false" />
+        <service
+            android:name=".services.VouchService"
             android:exported="false" />
 
-        <activity android:name=".Learn_Passphrase" />
-        <activity android:name=".TestPassphrase" />
-        <activity android:name=".CreateProfile" />
-        <activity android:name=".CreateTapp" />
+        <activity android:name=".activities.LearnPassphrase" />
+        <activity android:name=".activities.TestPassphrase" />
+        <activity android:name=".activities.CreateProfile" />
+        <activity android:name=".activities.CreateTapp" />
         <activity
-            android:name=".TappActivity"
+            android:name=".activities.TappActivity"
             android:label="@string/title_activity_tapp"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

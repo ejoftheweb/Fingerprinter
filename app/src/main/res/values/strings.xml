@@ -40,6 +40,8 @@
     </string-array>
     <!--TwitterKit-->
 
-        <!--paste in api key and consumer secret here -->
+    <string name="com.twitter.sdk.android.CONSUMER_KEY">bW0PDyrsFW7DcbId9LqnvjrAW</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">amgvtyNb40k1MbOSpE32grxDGolpEugpLryK9MzHTepNrIYRVX
+</string>
 
 </resources>

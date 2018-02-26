@@ -1,27 +1,19 @@
-package uk.co.platosys.fingerprinter;
+package uk.co.platosys.fingerprinter.activities;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Camera;
+import android.content.Context;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import uk.co.platosys.fingerprinter.R;
 import uk.co.platosys.fingerprinter.exceptions.CameraException;
 import uk.co.platosys.minigma.exceptions.Exceptions;
 
@@ -36,7 +28,7 @@ public class CreateTapp extends TappActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i("CT", "onCreate called");
-        this.cameraManager = (CameraManager) getSystemService(CAMERA_SERVICE);
+        this.cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
         try {
             String[] cameraIDs = cameraManager.getCameraIdList();
             for (String cameraID:cameraIDs){

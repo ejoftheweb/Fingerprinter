@@ -1,4 +1,4 @@
-package uk.co.platosys.fingerprinter;
+package uk.co.platosys.fingerprinter.services;
 
 import android.app.IntentService;
 import android.content.Intent;
