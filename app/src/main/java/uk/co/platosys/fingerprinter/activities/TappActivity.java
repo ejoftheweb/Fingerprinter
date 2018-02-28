@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -29,7 +30,7 @@ TextView publisherNameView;
 @BindView(R.id.authorNameView)
 TextView authorNameView;
 @BindView(R.id.imageLayout)
-LinearLayout imageLayout;
+RelativeLayout imageLayout;
 @BindView(R.id.contentView)
 TextView contentView;
 @BindView(R.id.addresseesButton)

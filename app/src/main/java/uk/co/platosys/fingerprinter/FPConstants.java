@@ -29,4 +29,5 @@ public class FPConstants {
     public static final String PLAYSTORE_TWITTER_URL = "https://play.google.com/store/apps/details?id=com.twitter.android";
     static final float POPUP_PROPORTIONS=0.55f;
     static final float AD_POPUP_PROPORTIONS=0.95f;
+   public static final int REQUEST_CAMERA_PERMISSION = 200;
 }

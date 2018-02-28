@@ -8,6 +8,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
+import android.util.Log;
 import android.widget.ImageView;
 
 import java.net.URL;
@@ -33,8 +34,7 @@ Bitmap bitmap;
         this.name = intent.getStringExtra(FPConstants.NAME_INTENT_KEY);
         publisherNameView.setText(name);
         authorNameView.setText(name);
-        Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_launcher_foreground, null);
-        bitmap = ((BitmapDrawable) drawable).getBitmap();
+       bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_launcher_foreground);
        showAlert(name, R.string.locksmith_working_message, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -45,7 +45,10 @@ Bitmap bitmap;
 
     }
     private void layoutProfile(){
-        tweetView.setText(vouchService.getVouchUser().getTwitterUser().description);
+        Log.i("CrPr", "starting to layout profile");
+        String description = (vouchService.getVouchUser().getTwitterUser().description);
+        tweetView.setText(description);
+        Log.i("CrPr",description );
         titleView.setText(vouchService.getVouchUser().getTwitterUser().name);
         illustrationView = new ImageView(this);
         try {
