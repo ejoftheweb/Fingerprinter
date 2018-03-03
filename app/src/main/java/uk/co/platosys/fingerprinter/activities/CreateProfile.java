@@ -15,6 +15,8 @@ import java.net.URL;
 
 import uk.co.platosys.fingerprinter.FPConstants;
 import uk.co.platosys.fingerprinter.R;
+import uk.co.platosys.fingerprinter.models.VouchUser;
+import uk.co.platosys.fingerprinter.services.VouchService;
 import uk.co.platosys.minigma.exceptions.Exceptions;
 
 public class CreateProfile extends CreateTapp {
@@ -42,17 +44,23 @@ Bitmap bitmap;
                 layoutProfile();
             }
         });
+       vouchService.addVouchUserCreatedListener(new VouchService.VouchUserCreatedListener() {
+           @Override
+           public void onVouchUserCreated(VouchUser vouchUser) {
+              layoutProfile();
+           }
+       });
 
     }
     private void layoutProfile(){
         Log.i("CrPr", "starting to layout profile");
-        String description = (vouchService.getVouchUser().getTwitterUser().description);
+        String description = vouchUser.getTwitterUser().description;
         tweetView.setText(description);
         Log.i("CrPr",description );
-        titleView.setText(vouchService.getVouchUser().getTwitterUser().name);
+        titleView.setText(vouchUser.getTwitterUser().name);
         illustrationView = new ImageView(this);
         try {
-            URL url = new URL(vouchService.getVouchUser().getTwitterUser().profileImageUrl);
+            URL url = new URL(vouchUser.getTwitterUser().profileImageUrl);
             //Bitmap bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
             imageLayout.addView(illustrationView);
             illustrationView.setImageBitmap(bitmap);

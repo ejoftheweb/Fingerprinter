@@ -86,7 +86,8 @@ public class SignupActivity extends BaseActivity {
                 Log.d("SA", "not yet bound, session not yet set");
             }
         }
-        Intent selectPassphraseIntent = new Intent(this, ChoosePassphrase.class);
+        //temporarily changed, should be ChoosePassphrase
+        Intent selectPassphraseIntent = new Intent(this, CreateProfile.class);
 
         selectPassphraseIntent.putExtra("name",name);
         //intent.putExtra( "email", email);

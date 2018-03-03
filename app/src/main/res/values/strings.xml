@@ -32,11 +32,16 @@
     <string name="title_activity_tapp">TappActivity</string>
     <string name="signupinfo">You must be signed up to Twitter to use Vouch.</string>
     <string name="get_twitter">Get Twitter now..</string>
+<string name="sign_alert_header">Vouchsafe!</string>
+    <string name="sign_alert_message">Do you really want to vouchsafe this Vouchr? This will show that you
+    endorse its contents</string>
+    <string name="reply_alert_header">Reply!</string>
+    <string name="reply_alert_message">Click OK to compose a reply to this Vouchr</string>
 
     <string-array name="imageoptions">
         <item>Camera</item>
         <item>Selfie</item>
-        <item>Photo</item>
+        <item>From File</item>
     </string-array>
     <!--TwitterKit-->
 

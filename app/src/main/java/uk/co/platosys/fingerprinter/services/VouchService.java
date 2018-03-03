@@ -13,6 +13,9 @@ import com.twitter.sdk.android.core.internal.network.OAuth1aInterceptor;
 import com.twitter.sdk.android.core.models.User;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,6 +34,7 @@ public class VouchService extends Service {
     private TwitterSession twitterSession;
    private boolean initialised = false;
     private VouchUser vouchUser;
+    List<VouchUserCreatedListener> vouchUserCreatedListenerList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -84,7 +88,16 @@ Log.d("VS", "binding to activity "+intent.getStringExtra("activity"));
             }
         });
     }
-    public VouchUser getVouchUser(){
-        return vouchUser;
+
+    private void notifyVouchUserCreatedListeners(VouchUser vouchUser){
+        for (VouchUserCreatedListener vouchUserCreatedListener:vouchUserCreatedListenerList){
+            vouchUserCreatedListener.onVouchUserCreated(vouchUser);
+        }
+    }
+    public void addVouchUserCreatedListener(VouchUserCreatedListener vouchUserCreatedListener){
+        this.vouchUserCreatedListenerList.add(vouchUserCreatedListener);
+    }
+    public interface VouchUserCreatedListener {
+        void onVouchUserCreated(VouchUser vouchUser);
     }
 }

@@ -20,6 +20,9 @@ import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import uk.co.platosys.fingerprinter.R;
 import uk.co.platosys.fingerprinter.services.VouchService;
 import uk.co.platosys.minigma.exceptions.Exceptions;
@@ -34,24 +37,31 @@ public abstract class BaseActivity  extends AppCompatActivity {
     int screenWidth;
     int screenHeight;
     boolean bound=false;
+    boolean binding=false;
     VouchService vouchService;
     String className = getClass().getName();
+    List<OnServiceBoundListener> onServiceBoundListenerList = new ArrayList<>();
+
     private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName className, IBinder service) {
             VouchService.VouchBinder vouchBinder = (VouchService.VouchBinder) service;
             vouchService = vouchBinder.getService();
             Log.d("BA", className+" is bound");
-            bound = true;
-            reportBinding();
+            binding=true;
+            for(OnServiceBoundListener onServiceBoundListener:onServiceBoundListenerList){
+                onServiceBoundListener.onServiceBound();
+            }
         }
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
             Log.d("BA", className+" is unbound");
-            bound = false;
+            binding=false;
         }
     };
-
+    public interface OnServiceBoundListener {
+        void onServiceBound();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,15 +82,19 @@ public abstract class BaseActivity  extends AppCompatActivity {
 
     @Override
     protected void onStop() {
+        if(bound){
+            unbindService(serviceConnection);
+            bound=false;
+        }
         super.onStop();
 
-
-    }
+ }
    private void bind(){
        Intent intent = new Intent(this, VouchService.class);
        intent.putExtra("activity", this.getClass().getName());
        Log.i("BA", className+" about to bind to service");
        bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+       bound=true;
    }
 
 
@@ -109,12 +123,15 @@ public abstract class BaseActivity  extends AppCompatActivity {
         }
         return false;
     }
-public void reportBinding(){
-        if(bound) {
+    public void reportBinding(){
+        if(binding) {
             Log.d("BA", this.getClass().getName() + " reporting bound");
         }else{
             Log.d("BA", this.getClass().getName() + " reporting not bound");
         }
-}
+    }
+    public void addOnServiceBoundListener(OnServiceBoundListener onServiceBoundListener){
+        onServiceBoundListenerList.add(onServiceBoundListener);
+    }
 
 }

@@ -1,5 +1,6 @@
 package uk.co.platosys.fingerprinter.activities;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,6 +18,10 @@ import butterknife.ButterKnife;
 import uk.co.platosys.fingerprinter.R;
 import uk.co.platosys.fingerprinter.activities.BaseActivity;
 
+/**This is the base class for Vouch activities
+ * having the basic Vouchr layout.
+ *
+ */
 public class TappActivity extends BaseActivity {
     @BindView(R.id.imageSourceSpinner)
     Spinner imageSourceSpinner;
@@ -52,14 +57,8 @@ ImageView illustrationView;
         Log.i("TA", "onCreate called");
         setContentView(R.layout.activity_tapp);
         ButterKnife.bind(this);
-        contentView.setText("");
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
+
     }
 
 }

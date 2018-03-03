@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This document is a highly commented version of the Tapp xml document which is, in
+fact, a Tapp. It is intended as a reference for developers. -->
+<tapp 	xmlns:tapp="http://tapp.org"
+    xmlns:tml="http://tml.org"
+    xmlns:tsl="http://tsl.org"
+    id="tappid"
+    parent="parentTappID">
+    <!-- the id is a 320-bit number expressed as 10-character Base64 string
+    Every tapp has a unique ID.
+    The url of any tapp is http://ta.pp/id.
+    Every tapp also has a parent (except the root tapp)
+    -->
+    <tapp:title>Title of the TAPP</tapp:title>
+    <!--Every tapp has a title of up to 100 characters  -->
+
+    <tapp:tweet>textual content of this tapp's tweet</tapp:tweet>
+    <!--Every tapp has a tweet. By default the tweet is the same as the title
+    The contents of this element are  restricted to 100 characters by the schema.
+    When the tweet is tweeted, the URL is appended.
+    -->
+    <tapp:tappsters>
+        <!-- this element specifies the readers of this tapp. By default it includes
+        "world" - all readers. But it can be restricted to fewer readers -->
+        <tapp:tappster name="" id="0" key="10Base64"/>
+        <!--the name is the twitter username.
+            the id is the tappster id
+            the key is an AES-256 key, encrypted with the reader's public key
+        -->
+    </tapp:tappsters>
+
+    <tapp:signatures>
+        <!-- signatures are Base64 encoded blocks of text calculated by encrypting
+        the digest (the value of the digest attribute of the contentwrapper element)
+        using the signer's secret key. Verification is accomplished by decrypting the
+        sigblock with the signer's public key -->
+        <tapp:signature
+            role="author"
+            tappster="tappsterid"
+            method="tapp02"
+            value="sigblock"/>
+        <!--the role attribute defines the capacity in which the
+        signer has signed-->
+        <!--the method attribute specifies the signature algorithm-->
+
+        <tapp:signature
+            role="publish"
+            tappster="tappsterid"
+            value="sigblock"/>
+        <tapp:signature
+            role="endorse"
+            tappster="tappsterid"
+            value="sigblock"/>
+    </tapp:signatures>
+    <tapp:tags>
+        <!--this element contains the hashtags, startags etc associated with this tappString  -->
+        <!--Tapp supports a range of different tags:
+        #hashtags - general open namespace
+        @attags - specifically, tappsters
+        $paytags - pricing
+        *startags - reserved namespace for subject tagging
+        ^hattags - reserved namespace for localism
+        Tagging is open but tags are signed.
+        -->
+        <tag tappster="tappsterid" signature="signature">tag</tag>
+    </tapp:tags>
+    <tapp:advert id=""/>
+    <!--Adverts are tapps like everything else. -->
+
+    <tapp:contentwrapper
+        method="tapp01" digest="digest">
+        <!--ENCRYPTED CONTENT STARTS HERE-->
+        <!--the digest attribute is calculated on the server using the specified method.
+        It covers the content element and its children only.
+        The digest is signed with the server's private key.-->
+        <!--the method attribute specifies the digest method, which is a combination
+        of the canonicalisation method, the digest algorithm and the signature algorithm-->
+
+        <tapp:abstract method="tapp03" args="">
+            <!--the abstract is an algorithmically-generated list of words generated from
+            the text and it is used to generate targeted advertisng. Note that being outside of
+            the content block means that it is not immutable.
+            All algorithms are published.Algorithms can take arguments which allow user control
+            of advertising preferences-->
+        </tapp:abstract>
+        <!--SIGNED DIGESTED CONTENT STARTS HERE-->
+        <tapp:content>
+            <tapp:contentmetadata id="id" timestamp="sqltime"/>
+
+            <!--content is immutable. -->
+            <!--content is always encrypted as well as being signed.Thus in practice, the
+            contents of the <content> element appear only as a block of Base64-encoded text, to
+            be decrypted by the client application. -->
+            <!-- a note on c14n: xml canonicalization (c14n) is, basically, a dog's breakfast. It is because of XML itself
+            and its origins as a text markup language derived from SGML. It is structurally unsuited to c14n. So we don't do it.
+            The content block is  Base64-encoded on submission and certification by the server. It *is* the canonical version. -->
+            <!--attributes timestamp and id are calculated and written by the server before
+            calculation of the digest-->
+            <tapp:illustration src="" digest=""/>
+            <tapp:text>
+                <!-- text is limited to 1000 chars plus tml markup -->
+                <!-- tml is a very restricted subset of html. It permits
+                limited formatting of the text element of a tapp.
+                In tml v.1, supported html elements are:
+                p, br, h1, h2, h3, em, strong, ul, ol, li, a, input, button.
+                <tml:input>  and <tml:button> take type and name attributes only.
+                Text content is rendered as a label.
+                "name" is referenced in tappscripts
+                -->
+                <tml:h1>heading </tml:h1>
+                <tml:p>Textual content with inline links
+                    <tml:a l="lid">A <tml:a l="lid2">link in</tml:a> a link></tml:a>
+                    <!-- in tml, hyperlink anchors can be nested -->
+                </tml:p>
+
+            </tapp:text>
+            <tapp:links>
+                <tapp:link name="name" orig="lid" dest="a url"/>
+            </tapp:links>
+            <tapp:scripts>
+                <!--scripts are written in tsl, the tapp scripting language. It is xml-->
+                <!--scripts in the content block are immutable -->
+                <tsl:script run="name">
+                    <!--the primary purpose of scripts is to handle form data submission-->
+                    <tsl:form url="submiturl">
+                        <tsl:param name="name" valueof="name"/>
+                        <!--this script gets the value of the input field with the name "name",
+                        assigns it to a parameter of name "name", attaches the parameter to a request
+                        object and posts it to the submiturl. GET is not supported -->
+                    </tsl:form>
+                </tsl:script>
+            </tapp:scripts>
+
+        </tapp:content>
+        <!--SIGNED, DIGESTED CONTENT ENDS-->
+        <!--ENCRYPTED CONTENT ENDS-->
+    </tapp:contentwrapper>
+
+    <tapp:scripts>
+        <!--scripts are written in tsl, the tapp scripting language. It is xml-->
+        <!--scripts outside the content block are mutable -->
+        <!--scripts do the linking stuff as well-->
+        <tsl:script run="reply"/>
+        <!-- because tapp content is immutable once committed, the only way to edit one is
+        to copy it and edit the result.
+        <tapp:reply id=""/>-->
+        <!-- replies to a tapp are listed as navlinks
+        <tapp:next id=""/>
+        <tapp:prev id=""/>-->
+
+
+        <tapp:script run="name">
+            <!--scripts can handle form data submission-->
+            <tsl:form url="submiturl">
+                <tsl:param name="name" valueof="name"/>
+                <!--this script gets the value of the input field with the name "name",
+                assigns it to a parameter of name "name", attaches the parameter to a request
+                object and posts it to the submiturl. GET is not supported -->
+            </tsl:form>
+        </tapp:script>
+    </tapp:scripts>
+
+</tapp>
