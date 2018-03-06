@@ -45,6 +45,8 @@ Log.d("VS", "binding to activity "+intent.getStringExtra("activity"));
     @Override
     public void onCreate(){
         super.onCreate();
+        twitterSession = TwitterCore.getInstance().getSessionManager().getActiveSession();
+        lookupUserInfo();
 
     }
     public class VouchBinder extends Binder {
@@ -52,17 +54,13 @@ Log.d("VS", "binding to activity "+intent.getStringExtra("activity"));
             super();
             Log.i("VS-VB", "ibinder created");
         }
-        public VouchService getService(){
+
+
+        public Service getService(){
             return VouchService.this;
         }
     }
-    public void setTwitterSession(TwitterSession twitterSession){
-        this.twitterSession=twitterSession;
-        Log.i("VS", "twitter session is "+twitterSession.getUserId());
-        if(! initialised){
-            lookupUserInfo();
-        }
-    }
+
     private void lookupUserInfo() {
         Log.i("VS", "startin to lookup user info");
         Retrofit retrofit = new Retrofit.Builder()
@@ -78,8 +76,11 @@ Log.d("VS", "binding to activity "+intent.getStringExtra("activity"));
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
+                Log.d("VS", "lookup response received");
                 vouchUser=new VouchUser(response.body());
                 initialised=true;
+
+                notifyVouchUserCreatedListeners(vouchUser);
             }
 
             @Override
@@ -90,12 +91,14 @@ Log.d("VS", "binding to activity "+intent.getStringExtra("activity"));
     }
 
     private void notifyVouchUserCreatedListeners(VouchUser vouchUser){
+        Log.i("VS", "notifying listeners that vouchUser "+vouchUser.getName()+"has been successfully created");
         for (VouchUserCreatedListener vouchUserCreatedListener:vouchUserCreatedListenerList){
             vouchUserCreatedListener.onVouchUserCreated(vouchUser);
         }
     }
     public void addVouchUserCreatedListener(VouchUserCreatedListener vouchUserCreatedListener){
         this.vouchUserCreatedListenerList.add(vouchUserCreatedListener);
+        Log.i("VS", "there are now "+vouchUserCreatedListenerList.size()+" VUCListeners");
     }
     public interface VouchUserCreatedListener {
         void onVouchUserCreated(VouchUser vouchUser);

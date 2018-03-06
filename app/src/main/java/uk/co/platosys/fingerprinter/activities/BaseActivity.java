@@ -44,13 +44,14 @@ public abstract class BaseActivity  extends AppCompatActivity {
 
     private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
-        public void onServiceConnected(ComponentName className, IBinder service) {
-            VouchService.VouchBinder vouchBinder = (VouchService.VouchBinder) service;
-            vouchService = vouchBinder.getService();
+        public void onServiceConnected(ComponentName className, IBinder iBinder) {
+            VouchService.VouchBinder vouchBinder = (VouchService.VouchBinder) iBinder;
+            vouchService = (VouchService) vouchBinder.getService();
             Log.d("BA", className+" is bound");
             binding=true;
             for(OnServiceBoundListener onServiceBoundListener:onServiceBoundListenerList){
-                onServiceBoundListener.onServiceBound();
+                Log.d("BA ", "notifying listener");
+                onServiceBoundListener.onServiceBound(vouchService);
             }
         }
         @Override
@@ -60,7 +61,9 @@ public abstract class BaseActivity  extends AppCompatActivity {
         }
     };
     public interface OnServiceBoundListener {
-        void onServiceBound();
+        void onServiceBound(VouchService vouchService);
+
+
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +135,7 @@ public abstract class BaseActivity  extends AppCompatActivity {
     }
     public void addOnServiceBoundListener(OnServiceBoundListener onServiceBoundListener){
         onServiceBoundListenerList.add(onServiceBoundListener);
+        Log.d("BA", "OSBL added, now " +onServiceBoundListenerList.size()+" listeners");
     }
 
 }

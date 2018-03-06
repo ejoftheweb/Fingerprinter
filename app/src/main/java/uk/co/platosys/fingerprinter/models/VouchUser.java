@@ -1,5 +1,7 @@
 package uk.co.platosys.fingerprinter.models;
 
+import android.util.Log;
+
 import com.twitter.sdk.android.core.models.User;
 
 /**
@@ -16,6 +18,7 @@ public class VouchUser {
     private String name;
 
     public VouchUser(com.twitter.sdk.android.core.models.User user){
+        Log.i("VU", "creating vouch user"+user.screenName);
         this.user=user;
         this.profileTweet=user.description;
         this.name=user.screenName;
@@ -23,4 +26,5 @@ public class VouchUser {
     public User getTwitterUser() {
         return user;
     }
+    public String getName(){return name;}
 }

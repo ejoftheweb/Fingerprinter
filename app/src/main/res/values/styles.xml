@@ -131,4 +131,21 @@
         <item name="android:background">#dfe</item>
 
     </style>
+    <style name="tapp_buttons" parent="Theme.AppCompat">
+        <item name="android:layout_margin">-5dp</item>
+
+    </style>
+    <style name = "button_addressees" parent="tapp_buttons">
+        <item name="android:background">#cb0</item>
+    </style>
+    <style name = "button_tags" parent="tapp_buttons">
+        <item name="android:background">#0cb</item>
+
+    </style>
+    <style name = "button_reactions" parent="tapp_buttons">
+        <item name="android:background">#c00</item>
+    </style>
+    <style name = "button_links" parent="tapp_buttons">
+        <item name="android:background">#b0c</item>
+    </style>
 </resources>

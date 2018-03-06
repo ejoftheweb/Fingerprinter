@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="0dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="uk.co.platosys.fingerprinter.activities.TappActivity"
     tools:showIn="@layout/activity_tapp">
@@ -84,6 +85,7 @@
 
     <Button
         android:id="@+id/addresseesButton"
+        style="@style/button_addressees"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="@id/imageLayout"
@@ -99,6 +101,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="#"
+        style="@style/button_tags"
         app:layout_constraintBottom_toTopOf="@id/endorsersButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toRightOf="@id/imageLayout"
@@ -106,6 +109,7 @@
         app:layout_constraintTop_toBottomOf="@id/addresseesButton" />
     <Button
         android:id="@+id/endorsersButton"
+        style="@style/button_reactions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tagsButton"
@@ -121,6 +125,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="\?"
+        style="@style/button_links"
         app:layout_constraintTop_toBottomOf="@id/endorsersButton"
         app:layout_constraintStart_toEndOf="@id/imageLayout"
         app:layout_constraintLeft_toRightOf="@id/imageLayout"

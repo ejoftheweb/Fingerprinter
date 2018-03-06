@@ -3,6 +3,7 @@ package uk.co.platosys.fingerprinter.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,9 +19,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import uk.co.platosys.fingerprinter.FPConstants;
 import uk.co.platosys.fingerprinter.R;
+import uk.co.platosys.fingerprinter.services.VouchService;
 import uk.co.platosys.minigma.exceptions.Exceptions;
 
-public class SignupActivity extends BaseActivity {
+public class SignupActivity extends AppCompatActivity {
 
    @BindView(R.id.login_button)
     TwitterLoginButton twitterLoginButton;
@@ -28,7 +30,7 @@ public class SignupActivity extends BaseActivity {
     Button getTwitterButton;
     String name;
     TwitterSession twitterSession;
-    boolean sessionSet;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,21 +38,20 @@ public class SignupActivity extends BaseActivity {
         Twitter.initialize(this);
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
-       reportBinding();
+
         twitterLoginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
+                Log.w("SA", "twitter session success");
                 twitterSession = result.data;
-                if(bound){
-                    vouchService.setTwitterSession(twitterSession);
-                    sessionSet=true;
-                }
+
                 name=twitterSession.getUserName();
                 selectPassphrase(name, twitterSession);
             }
 
             @Override
             public void failure(TwitterException exception) {
+                Log.e ("SA", "Twitter session failure");
                 Exceptions.dump(exception);
             }
         });
@@ -77,15 +78,8 @@ public class SignupActivity extends BaseActivity {
     }
 
     private void selectPassphrase(String name, TwitterSession twitterSession){
-        reportBinding();
-        if(!sessionSet){
-            if(bound){
-                vouchService.setTwitterSession(twitterSession);
-                sessionSet=true;
-            }else{
-                Log.d("SA", "not yet bound, session not yet set");
-            }
-        }
+
+
         //temporarily changed, should be ChoosePassphrase
         Intent selectPassphraseIntent = new Intent(this, CreateProfile.class);
 

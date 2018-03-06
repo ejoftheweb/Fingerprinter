@@ -31,30 +31,46 @@ Bitmap bitmap;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //showPopup();
-
+Log.d("CrPr", "creating activity, starting to create activity");
         Intent intent = getIntent();
         this.name = intent.getStringExtra(FPConstants.NAME_INTENT_KEY);
         publisherNameView.setText(name);
         authorNameView.setText(name);
+        addOnServiceBoundListener(new OnServiceBoundListener() {
+
+            public void onServiceBound(VouchService vouchService) {
+                Log.d("CrPr-OSBL", "on service bound method called");
+                if(vouchService.equals(CreateProfile.this.vouchService)) {
+                    vouchService.addVouchUserCreatedListener(new VouchService.VouchUserCreatedListener() {
+                        @Override
+                        public void onVouchUserCreated(VouchUser vouchUser) {
+                            if (CreateProfile.this.vouchUser.equals(vouchUser)) {
+                                layoutProfile();
+                            }else{
+                                Log.d("CrPr", "we seem to have a mismatched user problem here");
+                            }
+                        }
+                    });
+                }else{
+                    Log.d("CrPr", "we seem to have a mismatched service problem here");
+                }
+            }
+        });
        bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_launcher_foreground);
        showAlert(name, R.string.locksmith_working_message, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
-                layoutProfile();
+                //layoutProfile();
             }
         });
-       vouchService.addVouchUserCreatedListener(new VouchService.VouchUserCreatedListener() {
-           @Override
-           public void onVouchUserCreated(VouchUser vouchUser) {
-              layoutProfile();
-           }
-       });
+
 
     }
     private void layoutProfile(){
         Log.i("CrPr", "starting to layout profile");
         String description = vouchUser.getTwitterUser().description;
+        Log.i("CrPr", description);
         tweetView.setText(description);
         Log.i("CrPr",description );
         titleView.setText(vouchUser.getTwitterUser().name);

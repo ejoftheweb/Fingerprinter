@@ -57,13 +57,17 @@ VouchUser vouchUser;
         }
         addOnServiceBoundListener(new OnServiceBoundListener() {
             @Override
-            public void onServiceBound() {
-                vouchService.addVouchUserCreatedListener(new VouchService.VouchUserCreatedListener() {
-                    @Override
-                    public void onVouchUserCreated(VouchUser vouchUser) {
-                        CreateTapp.this.vouchUser=vouchUser;
-                    }
-                });
+            public void onServiceBound(VouchService vouchService) {
+                if(vouchService.equals(CreateTapp.this.vouchService)) {
+                    vouchService.addVouchUserCreatedListener(new VouchService.VouchUserCreatedListener() {
+                        @Override
+                        public void onVouchUserCreated(VouchUser vouchUser) {
+                            CreateTapp.this.vouchUser = vouchUser;
+                        }
+                    });
+                }else{
+                    Log.d("CT", "we seem to have a problem here");
+                }
             }
         });
 
@@ -148,7 +152,7 @@ VouchUser vouchUser;
             }else{
                 try {
                     this.cameras = new Cameras(this, cameraPreview);
-                }catch(CamerasException cx){
+                }catch(Exception cx){
                     Exceptions.dump(cx);
                 }
             }
@@ -167,7 +171,9 @@ VouchUser vouchUser;
         super.onPause();
         Log.i(TAG, "onPause");
         //closeCamera();
-        cameras.stopBackgroundThread();
+        if (cameras!=null) {
+            cameras.stopBackgroundThread();
+        }
 
     }
 
