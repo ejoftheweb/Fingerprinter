@@ -81,20 +81,20 @@
 
     </style>
     <style name="title" parent="Theme.AppCompat">
-        <item name="android:textSize">20dp</item>
-        <item name="android:textColor">#296</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:textColor">#162</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAlignment">center</item>
-        <item name="android:padding">10sp</item>
+        <item name="android:padding">3dp</item>
 
-        <item name="android:background">#fff</item>
+        <item name="android:background">#cfc</item>
 
     </style>
     <style name="tweet" parent="Theme.AppCompat">
         <item name="android:textSize">12dp</item>
         <item name="android:textColor">#000</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textAlignment">center</item>
+        <item name="android:textAlignment">viewStart</item>
         <item name="android:paddingLeft">10dp</item>
         <item name="android:paddingTop">5dp</item>
 
@@ -105,12 +105,21 @@
         <item name="android:textSize">15dp</item>
         <item name="android:textColor">#000</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textAlignment">center</item>
-        <item name="android:padding">10sp</item>
 
-        <item name="android:background">#dfe</item>
-
+        <item name="android:padding">2sp</item>
+     </style>
+    <style name="author" parent="owners">
+        <item name="android:background">#000</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:textAlignment">viewStart</item>
     </style>
+    <style name="publisher" parent="owners">
+        <item name="android:background">#fff</item>
+        <item name="android:textColor">#000</item>
+        <item name="android:textAlignment">viewEnd</item>
+    </style>
+
+
     <style name="popupHeader" parent="Theme.AppCompat">
         <item name="android:textSize">15dp</item>
         <item name="android:textColor">#000</item>

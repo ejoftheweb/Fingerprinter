@@ -34,8 +34,7 @@ TextView tweetView;
 TextView publisherNameView;
 @BindView(R.id.authorNameView)
 TextView authorNameView;
-@BindView(R.id.imageLayout)
-RelativeLayout imageLayout;
+
 @BindView(R.id.contentView)
 TextView contentView;
 @BindView(R.id.addresseesButton)
@@ -48,7 +47,7 @@ Button endorsersButton;
 Button linksButton;
 @BindView(R.id.fab)
 FloatingActionButton fab;
-
+@BindView(R.id.illustrationView)
 ImageView illustrationView;
 
     @Override

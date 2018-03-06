@@ -18,8 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import uk.co.platosys.fingerprinter.R;
 import uk.co.platosys.fingerprinter.cameras.Cameras;
-import uk.co.platosys.fingerprinter.exceptions.CamerasException;
-import uk.co.platosys.fingerprinter.models.VouchUser;
+import uk.co.platosys.fingerprinter.services.VouchUser;
 import uk.co.platosys.fingerprinter.services.VouchService;
 import uk.co.platosys.minigma.exceptions.Exceptions;
 
@@ -80,7 +79,7 @@ VouchUser vouchUser;
 
         // Set the content view and get references to our views
 
-
+        cameraPreview.setVisibility(View.INVISIBLE);
         ArrayAdapter<CharSequence> imageSourceSpinnerAdapter = ArrayAdapter.createFromResource(this, R.array.imageoptions, android.R.layout.simple_spinner_item);
         imageSourceSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -94,22 +93,25 @@ VouchUser vouchUser;
                     case 0:{
                         if (cameras!=null) {
                             cameras.selectCamera(Cameras.REAR_CAMERA);
-
+                            cameraPreview.setVisibility(View.VISIBLE);
                         }
                         break;
                     }
                     case 1:{
                         if (cameras!=null) {
                             cameras.selectCamera(Cameras.FRONT_CAMERA);
-
+                            cameraPreview.setVisibility(View.VISIBLE);
                         }
                         break;
                     }
                     case 2:{
-                        break;
+                        cameraPreview.setVisibility(View.INVISIBLE);
                     }
                     default:{
-
+                        if (cameras!=null) {
+                            cameras.selectCamera(Cameras.REAR_CAMERA);
+                            cameraPreview.setVisibility(View.VISIBLE);
+                        }
                     }
                 }
             }

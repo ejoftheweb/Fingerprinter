@@ -8,92 +8,128 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="uk.co.platosys.fingerprinter.activities.TappActivity"
     tools:showIn="@layout/activity_tapp">
-    <TextView
-        android:id="@+id/titleView"
+
+    <android.support.constraint.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:id="@+id/right_guideline"
+        app:layout_constraintGuide_percent=".85"
+        android:orientation="vertical"/>
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/centre_guideline"
+        app:layout_constraintGuide_percent=".50"
+        android:orientation="vertical"/>
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/upper_guideline"
+        app:layout_constraintGuide_percent=".08"
+        android:orientation="horizontal"/>
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/second_guideline"
+        app:layout_constraintGuide_percent=".13"
+        android:orientation="horizontal"/>
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/middle_guideline"
+        app:layout_constraintGuide_percent=".50"
+        android:orientation="horizontal"/>
+    <TextView
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="title"
         style="@style/title"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/tweetView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="16dp" />
+        />
     <TextView
         android:id="@+id/tweetView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:text="tweet"
         style="@style/tweet"
         app:layout_constraintTop_toBottomOf="@id/titleView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintBottom_toTopOf="@id/upper_guideline"/>
     <TextView
         android:id="@+id/publisherNameView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+
         android:text="publishername"
-        style="@style/owners"
-        app:layout_constraintTop_toBottomOf="@id/tweetView"
-        app:layout_constraintEnd_toStartOf="@id/authorNameView"
-        app:layout_constraintRight_toLeftOf="@id/authorNameView"
-        app:layout_constraintStart_toStartOf="parent"
+        style="@style/publisher"
+        app:layout_constraintTop_toBottomOf="@id/upper_guideline"
+        app:layout_constraintRight_toLeftOf="@id/centre_guideline"
+        app:layout_constraintBottom_toTopOf="@id/second_guideline"
         />
     <TextView
         android:id="@+id/authorNameView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+
         android:text="authorname"
-        style="@style/owners"
-        app:layout_constraintTop_toBottomOf="@id/tweetView"
-        app:layout_constraintStart_toEndOf="@id/publisherNameView"
-        app:layout_constraintLeft_toRightOf="@id/publisherNameView"
-        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/author"
+        app:layout_constraintTop_toBottomOf="@id/upper_guideline"
+        app:layout_constraintLeft_toRightOf="@id/centre_guideline"
+        app:layout_constraintBottom_toTopOf="@id/second_guideline"
         />
 
 
-    <RelativeLayout
-        android:id="@+id/imageLayout"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:background="@color/popupBackground"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/authorNameView">
+
+
         <!-- Camera Preview -->
         <TextureView
             android:id="@+id/camera_preview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/second_guideline"
+            app:layout_constraintRight_toLeftOf="@id/right_guideline"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/middle_guideline"
+
+
+            />
 
         <Spinner
             android:id="@+id/imageSourceSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/second_guideline"
+            app:layout_constraintRight_toLeftOf="@id/right_guideline"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/middle_guideline">
 
         </Spinner>
-    </RelativeLayout>
+        <ImageView android:id="@+id/illustrationView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/second_guideline"
+            app:layout_constraintRight_toLeftOf="@id/right_guideline"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/middle_guideline"/>
+
 
     <Button
         android:id="@+id/addresseesButton"
         style="@style/button_addressees"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/imageLayout"
-        app:layout_constraintStart_toEndOf="@id/imageLayout"
-        app:layout_constraintLeft_toRightOf="@id/imageLayout"
+        app:layout_constraintTop_toBottomOf="@id/second_guideline"
+        app:layout_constraintLeft_toRightOf="@id/right_guideline"
         app:layout_constraintBottom_toTopOf="@id/tagsButton"
+
         android:text="\@"
-        app:layout_constraintEnd_toEndOf="parent"
         />
 
     <Button
@@ -102,21 +138,19 @@
         android:layout_height="wrap_content"
         android:text="#"
         style="@style/button_tags"
+        app:layout_constraintTop_toBottomOf="@id/addresseesButton"
+        app:layout_constraintLeft_toRightOf="@id/right_guideline"
         app:layout_constraintBottom_toTopOf="@id/endorsersButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/imageLayout"
-        app:layout_constraintStart_toEndOf="@id/imageLayout"
-        app:layout_constraintTop_toBottomOf="@id/addresseesButton" />
+        />
     <Button
         android:id="@+id/endorsersButton"
         style="@style/button_reactions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tagsButton"
-        app:layout_constraintStart_toEndOf="@id/imageLayout"
-        app:layout_constraintLeft_toRightOf="@id/imageLayout"
+
         android:text="!"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tagsButton"
+        app:layout_constraintLeft_toRightOf="@id/right_guideline"
         app:layout_constraintBottom_toTopOf="@id/linksButton"
 
         />
@@ -127,11 +161,8 @@
         android:text="\?"
         style="@style/button_links"
         app:layout_constraintTop_toBottomOf="@id/endorsersButton"
-        app:layout_constraintStart_toEndOf="@id/imageLayout"
-        app:layout_constraintLeft_toRightOf="@id/imageLayout"
-        app:layout_constraintBottom_toBottomOf="@id/imageLayout"
-        app:layout_constraintBottom_toTopOf="@id/contentView"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/right_guideline"
+        app:layout_constraintBottom_toTopOf="@id/middle_guideline"
         />
     <EditText
         android:id="@+id/contentView"
@@ -141,8 +172,9 @@
         android:text="textcontent"
         android:background="@color/popupBackground"
         android:inputType="textMultiLine"
-        app:layout_constraintTop_toBottomOf="@id/imageLayout"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/middle_guideline"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

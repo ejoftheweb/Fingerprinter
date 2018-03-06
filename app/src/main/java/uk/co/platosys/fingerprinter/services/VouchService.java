@@ -13,6 +13,8 @@ import com.twitter.sdk.android.core.internal.network.OAuth1aInterceptor;
 import com.twitter.sdk.android.core.models.User;
 
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +25,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import uk.co.platosys.fingerprinter.twitter.TwitterApiInterface;
-import uk.co.platosys.fingerprinter.models.VouchUser;
+import uk.co.platosys.minigma.exceptions.Exceptions;
 
 /**
  * Created by edward on 25/02/18.
@@ -77,10 +79,13 @@ Log.d("VS", "binding to activity "+intent.getStringExtra("activity"));
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 Log.d("VS", "lookup response received");
-                vouchUser=new VouchUser(response.body());
-                initialised=true;
-
-                notifyVouchUserCreatedListeners(vouchUser);
+                vouchUser = new VouchUser(response.body(), VouchService.this);
+                initialised = true;
+                try {
+                    vouchUser.setAvatarURL(new URL(vouchUser.getTwitterUser().profileImageUrl));
+                } catch (MalformedURLException murx) {
+                    Exceptions.dump(murx);
+                }
             }
 
             @Override
@@ -90,7 +95,15 @@ Log.d("VS", "binding to activity "+intent.getStringExtra("activity"));
         });
     }
 
-    private void notifyVouchUserCreatedListeners(VouchUser vouchUser){
+
+
+        //User-creation notification
+    /** VouchUsers are created asynchronously. The Service must perform various lookups to populate the
+     * VouchUser details; it does so in a separate thread. Activities that need to be notified when
+     * the VouchUser has been created register a listener with the service that is activated when the user is created.
+     *
+     */
+    protected void notifyVouchUserCreatedListeners(VouchUser vouchUser){
         Log.i("VS", "notifying listeners that vouchUser "+vouchUser.getName()+"has been successfully created");
         for (VouchUserCreatedListener vouchUserCreatedListener:vouchUserCreatedListenerList){
             vouchUserCreatedListener.onVouchUserCreated(vouchUser);
@@ -103,4 +116,7 @@ Log.d("VS", "binding to activity "+intent.getStringExtra("activity"));
     public interface VouchUserCreatedListener {
         void onVouchUserCreated(VouchUser vouchUser);
     }
+
+
+
 }

@@ -4,18 +4,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
-
-import java.net.URL;
 
 import uk.co.platosys.fingerprinter.FPConstants;
 import uk.co.platosys.fingerprinter.R;
-import uk.co.platosys.fingerprinter.models.VouchUser;
+import uk.co.platosys.fingerprinter.services.VouchUser;
 import uk.co.platosys.fingerprinter.services.VouchService;
 import uk.co.platosys.minigma.exceptions.Exceptions;
 
@@ -45,7 +41,7 @@ Log.d("CrPr", "creating activity, starting to create activity");
                         @Override
                         public void onVouchUserCreated(VouchUser vouchUser) {
                             if (CreateProfile.this.vouchUser.equals(vouchUser)) {
-                                layoutProfile();
+                                runOnUiThread(new LayoutProfile());
                             }else{
                                 Log.d("CrPr", "we seem to have a mismatched user problem here");
                             }
@@ -67,22 +63,19 @@ Log.d("CrPr", "creating activity, starting to create activity");
 
 
     }
-    private void layoutProfile(){
-        Log.i("CrPr", "starting to layout profile");
-        String description = vouchUser.getTwitterUser().description;
-        Log.i("CrPr", description);
-        tweetView.setText(description);
-        Log.i("CrPr",description );
-        titleView.setText(vouchUser.getTwitterUser().name);
-        illustrationView = new ImageView(this);
-        try {
-            URL url = new URL(vouchUser.getTwitterUser().profileImageUrl);
-            //Bitmap bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-            imageLayout.addView(illustrationView);
-            illustrationView.setImageBitmap(bitmap);
-        }catch (Exception x){
-            Exceptions.dump(x);
-        }
+    private class LayoutProfile implements  Runnable {
+        public void run() {
+            tweetView.setText(vouchUser.getProfileTweet());
+            titleView.setText(vouchUser.getTwitterUser().name);
+            cameraPreview.setVisibility(View.INVISIBLE);
+            try {
 
+                illustrationView.setImageBitmap(vouchUser.getAvatar());
+                illustrationView.setVisibility(View.VISIBLE);
+            } catch (Exception x) {
+                Exceptions.dump(x);
+            }
+
+        }
     }
 }
