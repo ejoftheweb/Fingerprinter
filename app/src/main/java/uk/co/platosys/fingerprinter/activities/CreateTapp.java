@@ -43,6 +43,9 @@ VouchUser vouchUser;
         super.onCreate(savedInstanceState);
         Log.i("CT", "onCreate called");
         setContentView(R.layout.activity_tapp);
+    
+        
+        
         ButterKnife.bind(this);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {

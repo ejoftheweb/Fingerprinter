@@ -50,13 +50,23 @@ FloatingActionButton fab;
 @BindView(R.id.illustrationView)
 ImageView illustrationView;
 
+int illustrationWidth;
+int illustrationHeight;
+static final float illustrationWidthRatio= 0.85f;
+static final float illustrationHeightRatio=0.3f;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i("TA", "onCreate called");
         setContentView(R.layout.activity_tapp);
         ButterKnife.bind(this);
-
+        illustrationWidth= (int) (screenWidth*illustrationWidthRatio);
+        illustrationHeight= (int) (screenHeight*illustrationHeightRatio);
+        illustrationView.setMaxWidth(illustrationWidth);
+        illustrationView.setMinimumWidth(illustrationWidth);
+        illustrationView.setMaxHeight(illustrationHeight);
+        illustrationView.setMinimumHeight(illustrationHeight);
 
     }
 
