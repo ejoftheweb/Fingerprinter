@@ -24,6 +24,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import uk.co.platosys.fingerprinter.models.user.VouchUser;
 import uk.co.platosys.fingerprinter.twitter.TwitterApiInterface;
 import uk.co.platosys.minigma.exceptions.Exceptions;
 
@@ -103,7 +104,7 @@ Log.d("VS", "binding to activity "+intent.getStringExtra("activity"));
      * the VouchUser has been created register a listener with the service that is activated when the user is created.
      *
      */
-    protected void notifyVouchUserCreatedListeners(VouchUser vouchUser){
+    public void notifyVouchUserCreatedListeners(VouchUser vouchUser){
         Log.i("VS", "notifying listeners that vouchUser "+vouchUser.getName()+"has been successfully created");
         for (VouchUserCreatedListener vouchUserCreatedListener:vouchUserCreatedListenerList){
             vouchUserCreatedListener.onVouchUserCreated(vouchUser);

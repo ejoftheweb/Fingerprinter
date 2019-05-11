@@ -18,7 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import uk.co.platosys.fingerprinter.R;
 import uk.co.platosys.fingerprinter.cameras.Cameras;
-import uk.co.platosys.fingerprinter.services.VouchUser;
+import uk.co.platosys.fingerprinter.models.user.VouchUser;
 import uk.co.platosys.fingerprinter.services.VouchService;
 import uk.co.platosys.minigma.exceptions.Exceptions;
 
@@ -43,7 +43,7 @@ VouchUser vouchUser;
         super.onCreate(savedInstanceState);
         Log.i("CT", "onCreate called");
         setContentView(R.layout.activity_tapp);
-    
+
         
         
         ButterKnife.bind(this);

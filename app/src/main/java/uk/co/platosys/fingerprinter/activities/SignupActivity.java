@@ -22,6 +22,7 @@ import uk.co.platosys.fingerprinter.R;
 import uk.co.platosys.fingerprinter.services.VouchService;
 import uk.co.platosys.minigma.exceptions.Exceptions;
 
+/**sign up using Twitter**/
 public class SignupActivity extends AppCompatActivity {
 
    @BindView(R.id.login_button)
@@ -81,8 +82,8 @@ public class SignupActivity extends AppCompatActivity {
 
 
         //temporarily changed, should be ChoosePassphrase
-        Intent selectPassphraseIntent = new Intent(this, CreateProfile.class);
-
+        Intent selectPassphraseIntent = new Intent(this, ChoosePassphrase.class);
+        //Intent selectPassphraseIntent = new Intent(this, CreateProfile.class);
         selectPassphraseIntent.putExtra("name",name);
         //intent.putExtra( "email", email);
         startActivity(selectPassphraseIntent);

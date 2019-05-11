@@ -15,6 +15,7 @@ import uk.co.platosys.fingerprinter.FPConstants;
 import uk.co.platosys.fingerprinter.R;
 import uk.co.platosys.minigma.PassPhraser;
 
+/**class provides an Activity which selects using */
 public class ChoosePassphrase extends BaseActivity {
 @BindView(R.id.learnPassphraseLabel)
     TextView learnPassphraseLabelView;

@@ -32,11 +32,11 @@ repositories {
 
 dependencies {
     implementation 'com.android.support:design:26.1.0'
-    compile 'com.github.ejoftheweb:minigmand:v0.1.6.2'
+    implementation 'com.github.ejoftheweb:minigmand:v0.1.7.1'
     implementation 'com.github.ejoftheweb:effwords:v0.2.2'
-    compile 'com.mtramin:rxfingerprint:2.2.1'
-    compile 'org.jdom:jdom2:2.0.6'
-    compile 'com.jakewharton:butterknife:8.8.1'
+    implementation 'com.mtramin:rxfingerprint:2.2.1'
+    implementation 'org.jdom:jdom2:2.0.6'
+    implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
@@ -44,7 +44,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    compile('com.twitter.sdk.android:twitter:3.2.0@aar') {
+    implementation('com.twitter.sdk.android:twitter:3.2.0@aar') {
         transitive = true
     }
 }

@@ -1,4 +1,4 @@
-package uk.co.platosys.fingerprinter.services;
+package uk.co.platosys.fingerprinter.models.user;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.net.URL;
 
 import uk.co.platosys.fingerprinter.services.VouchService;
+import uk.co.platosys.minigma.Key;
+import uk.co.platosys.minigma.Lock;
 import uk.co.platosys.minigma.exceptions.Exceptions;
 
 /**
@@ -20,35 +22,28 @@ import uk.co.platosys.minigma.exceptions.Exceptions;
  * Created by edward on 23/02/18.
  */
 
-public class VouchUser {
-    private User user;
-    private String profileTweet;
-    private String name;
+public  class VouchUser extends Vouchor implements Twit {
+    private User twitterUser;
+    private String profileString;
     private Bitmap avatar;
-    private boolean done=false;
     private URL avatarURL;
     private VouchService vouchService;
 
-    public VouchUser(com.twitter.sdk.android.core.models.User user, VouchService vouchService){
-        Log.i("VU", "creating vouch user"+user.screenName);
+    public VouchUser(com.twitter.sdk.android.core.models.User twitterUser, VouchService vouchService){
+        Log.i("VU", "creating vouch user"+twitterUser.screenName);
         this.vouchService=vouchService;
-        this.user=user;
-        this.profileTweet=user.description;
-        this.name=user.screenName;
+        this.twitterUser=twitterUser;
+        this.profileString=twitterUser.description;
+        this.name=twitterUser.screenName;
     }
-    public User getTwitterUser() {
-        return user;
-    }
-    public String getName(){return name;}
+
+    public User getTwitterUser() {return twitterUser;}
     public Bitmap getAvatar() {return avatar;}
-
-    public String getProfileTweet() {
-        return profileTweet;
+    public String getProfileString() {
+        return profileString;
     }
 
-    public boolean isDone() {
-        return done;
-    }
+
 
 
 
@@ -71,5 +66,15 @@ public class VouchUser {
                 Exceptions.dump (iox);
             }
         }
+    }
+
+    @Override
+    public Key getKey() {
+        return null;
+    }
+
+    @Override
+    public Lock getLock() {
+        return null;
     }
 }

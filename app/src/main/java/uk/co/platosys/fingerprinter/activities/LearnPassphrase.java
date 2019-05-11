@@ -18,6 +18,11 @@ import uk.co.platosys.fingerprinter.R;
 import uk.co.platosys.fingerprinter.activities.TestPassphrase;
 import uk.co.platosys.minigma.PassPhraser;
 
+/**The LearnPassphrase activity uses a series of "flashcards" to teach the
+ * passphrase to the user.
+ *
+ */
+
 public class LearnPassphrase extends BaseActivity {
 @BindView(R.id.rubric)
     TextView rubricTextView;
@@ -101,6 +106,10 @@ int rubricCounter=0;
         return rubric;
 
     }
+
+    /**
+     * thread to run the flashcards
+     */
   private class FlashShow implements Runnable {
         public void run(){
             flashing=true;

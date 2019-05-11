@@ -7,11 +7,10 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 
 import uk.co.platosys.fingerprinter.FPConstants;
 import uk.co.platosys.fingerprinter.R;
-import uk.co.platosys.fingerprinter.services.VouchUser;
+import uk.co.platosys.fingerprinter.models.user.VouchUser;
 import uk.co.platosys.fingerprinter.services.VouchService;
 import uk.co.platosys.minigma.exceptions.Exceptions;
 
@@ -65,7 +64,7 @@ Log.d("CrPr", "creating activity, starting to create activity");
     }
     private class LayoutProfile implements  Runnable {
         public void run() {
-            tweetView.setText(vouchUser.getProfileTweet());
+            tweetView.setText(vouchUser.getProfileString());
             titleView.setText(vouchUser.getTwitterUser().name);
             cameraPreview.setVisibility(View.INVISIBLE);
             try {
